@@ -19,6 +19,34 @@ resource "aws_iam_role" "role_for_ingestion_lambda" {
   })
 }
 
+# Create IAM policy for Cloudwatch logs
+resource "aws_iam_policy" "cloudwatch_logs_policy_for_ingestion_lambda" {
+  name        = "ingestion_lambda_cloudwatch_logs_policy"
+  description = "Allows ingestion lambda to write logs to cloudwatch"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action   = "logs:CreateLogGroup",
+        Effect   = "Allow",
+        Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+      },
+      {
+        Action   = ["logs:CreateLogStream", "logs:PutLogEvents"],
+        Effect   = "Allow",
+        Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${var.ingestion_lambda}:*"
+      }
+    ]
+  })
+}
+
+# Attach the CW policy to the role
+resource "aws_iam_role_policy_attachment" "ingestion_lambda_cw_policy_attachment" {
+  policy_arn = aws_iam_policy.cloudwatch_logs_policy_for_ingestion_lambda.arn
+  role       = aws_iam_role.role_for_ingestion_lambda.name
+}
+
+
 # Create IAM policy for Kinesis
 resource "aws_iam_policy" "kinesis_input_policy_for_ingestion_lambda" {
     name = "ingestion_lambda_kinesis_input_policy"
