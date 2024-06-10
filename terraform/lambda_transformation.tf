@@ -12,19 +12,19 @@ resource "aws_lambda_function" "transformation_lambda" {
 
 
 # Trigger the lambda function with the S3 bucket
-resource "aws_lambda_permission" "allow_put_object_event" {
+resource "aws_lambda_permission" "allow_transformation_put_object_event" {
   action         = "lambda:InvokeFunction"
   function_name  = aws_lambda_function.transformation_lambda.function_name
   principal      = "s3.amazonaws.com"
   source_arn     = aws_s3_bucket.ingestion_data_bucket.arn
 }
 
-resource "aws_s3_bucket_notification" "bucket_notification" {
+resource "aws_s3_bucket_notification" "transformation_bucket_notification" {
   bucket = aws_s3_bucket.ingestion_data_bucket.id
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.transformation_lambda.arn
     events              = ["s3:ObjectCreated:*"]
   }
-  depends_on = [aws_lambda_permission.allow_put_object_event]
+  depends_on = [aws_lambda_permission.allow_transformation_put_object_event]
 }
