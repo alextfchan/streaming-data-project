@@ -3,3 +3,9 @@ resource "aws_kinesis_stream" "input_stream" {
     shard_count = 1
     retention_period = 72
 }
+
+resource "aws_kinesis_stream" "output_stream" {
+    name = var.kinesis_output
+    shard_count = 1
+    retention_period = 72
+}

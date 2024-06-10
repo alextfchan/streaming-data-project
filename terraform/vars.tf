@@ -18,7 +18,7 @@ variable "kinesis_input" {
   default = "streaming_data_project_input"
 }
 
-# variable "kinesis_output" {
-#   type = string
-#   default = "streaming_data_project_output"
-# }
+variable "kinesis_output" {
+  type = string
+  default = "streaming_data_project_output"
+}
