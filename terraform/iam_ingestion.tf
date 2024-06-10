@@ -40,41 +40,46 @@ resource "aws_iam_policy" "kinesis_input_policy_for_ingestion_lambda" {
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "*"
+            "Resource": "${aws_kinesis_stream.input_stream.arn}"
         }
         ]
     })
 }
 
-resource "aws_iam_role_policy_attachment" "role_for_ingestion_lambda_kinesis_policy_attachment" {
+# Attach the Kinesis policy to the role
+resource "aws_iam_role_policy_attachment" "ingestion_lambda_kinesis_policy_attachment" {
     role = aws_iam_role.role_for_ingestion_lambda.name
     policy_arn = aws_iam_policy.kinesis_input_policy_for_ingestion_lambda.arn
 }
 
-# https://developer.hashicorp.com/terraform/tutorials/aws/aws-iam-policy
-# Refactor aws_iam_policy for s3 bucket.
 
-# Create IAM policy for s3 Bucket
+# Create IAM policy for S3 Bucket
 resource "aws_iam_policy" "ingestion_lambda_input_to_bucket" {
-    name = "ingestion_lambda_input_to_bucket"
-    description = "Allows the ingestion lambda to put objects into an s3 bucket"
-    policy = jsonencode({
+  name = "ingestion_lambda_input_to_bucket"
+  description = "Allows the ingestion lambda to put objects into an s3 bucket"
+  policy = jsonencode({
     "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:*",
-                "s3-object-lambda:*"
-            ],
-            "Resource": "*"
-        }
+    Statement = [
+      {
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3-object-lambda:GetObject",
+          "s3-object-lambda:PutObject",
+          "s3:ListBucket"
+        ],
+        Effect = "Allow",
+        Resource = [
+          "${aws_s3_bucket.ingestion_data_bucket.arn}/*",
+          "${aws_s3_bucket.ingestion_data_bucket.arn}",
+        ]
+      },
     ]
-})
+  })
 }
 
-# Attach the s3 policy to the role
-resource "aws_iam_role_policy_attachment" "role_for_ingestion_lambda_s3_bucket_policy_attachment" {
+# Attach the S3 policy to the role
+resource "aws_iam_role_policy_attachment" "ingestion_lambda_s3_bucket_policy_attachment" {
     role = aws_iam_role.role_for_ingestion_lambda.name
     policy_arn = aws_iam_policy.ingestion_lambda_input_to_bucket.arn
 }

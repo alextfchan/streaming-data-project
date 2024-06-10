@@ -85,8 +85,8 @@ resource "aws_iam_policy" "transformation_lambda_s3_policy" {
   })
 }
 
-# Attach the s3 policy to the role
-resource "aws_iam_role_policy_attachment" "transformation_lambda_s3_policy_attachment" {
+# Attach the S3 policy to the role
+resource "aws_iam_role_policy_attachment" "transformation_lambda_s3_bucket_policy_attachment" {
   role       = aws_iam_role.role_for_transformation_lambda.name
   policy_arn = aws_iam_policy.transformation_lambda_s3_policy.arn
 }
