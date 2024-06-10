@@ -73,6 +73,7 @@ resource "aws_iam_policy" "ingestion_lambda_input_to_bucket" {
 })
 }
 
+# Attach the s3 policy to the role
 resource "aws_iam_role_policy_attachment" "role_for_ingestion_lambda_s3_bucket_policy_attachment" {
     role = aws_iam_role.role_for_ingestion_lambda.name
     policy_arn = aws_iam_policy.ingestion_lambda_input_to_bucket.arn
