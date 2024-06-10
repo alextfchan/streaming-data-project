@@ -45,7 +45,7 @@ def get_content_preview(webUrl: str) -> str:
         The apiURL of the article.
         Function get_content will provide the correct URL.
     """
-    response = requests.get(webUrl)
+    response = requests.get(webUrl, timeout=90)
     response_json = response.json()
     content = response_json["response"]["content"]["fields"]["body"]
     return str(content[:1000])
