@@ -1,5 +1,6 @@
 import base64
 import logging
+import json
 from datetime import datetime as dt
 import boto3
 
@@ -10,7 +11,8 @@ logger.setLevel(logging.INFO)
 
 def ingestion_handler(event, context):
     """
-    This function is used to ingest data from the Kinesis stream and save it to an S3 bucket.
+    This function is used to ingest data from the Kinesis stream
+    and save it to an S3 bucket.
     It does this using event source mapping.
 
     Parameters
