@@ -35,6 +35,8 @@ resource "aws_iam_policy" "kinesis_output_policy_for_loading_lambda" {
                 "kinesis:GetShardIterator",
                 "kinesis:ListShards",
                 "kinesis:ListStreams",
+                "kinesis:PutRecord",
+                "kinesis:PutRecords",
                 "kinesis:SubscribeToShard",
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
