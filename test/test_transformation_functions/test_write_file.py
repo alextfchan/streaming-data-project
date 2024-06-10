@@ -5,7 +5,7 @@ import pytest
 import time_machine
 import boto3
 from moto import mock_aws
-from transformation_lambda.write_file import write_file
+from transformation_lambda.write_file import write_file_to_s3
 
 logger = logging.getLogger("MyLogger")
 logger.setLevel(logging.INFO)
@@ -27,7 +27,7 @@ class TestWriteFile:
             Bucket="streaming-data-transformed-data-bucket",
             CreateBucketConfiguration={"LocationConstraint": "eu-west-2"},
         )
-        write_file(search_terms)
+        write_file_to_s3(search_terms)
         response = s3.list_objects(Bucket="streaming-data-transformed-data-bucket") # noqa 501
         assert len(response["Contents"]) == 1
 
@@ -39,7 +39,7 @@ class TestWriteFile:
             Bucket="streaming-data-transformed-data-bucket",
             CreateBucketConfiguration={"LocationConstraint": "eu-west-2"},
         )
-        write_file(search_terms)
+        write_file_to_s3(search_terms)
         response = s3.list_objects(Bucket="streaming-data-transformed-data-bucket") # noqa 501
         assert response["Contents"][0]["Key"] == "2020-1-1-173019-transformed-content.json" # noqa 501
 
@@ -51,7 +51,7 @@ class TestWriteFile:
             Bucket="streaming-data-transformed-data-bucket",
             CreateBucketConfiguration={"LocationConstraint": "eu-west-2"},
         )
-        write_file(search_terms)
+        write_file_to_s3(search_terms)
         assert (
              "Success. File 2020-1-1-173019-transformed-content.json saved."
              in caplog.text
@@ -66,7 +66,7 @@ class TestWriteFile:
             )
             search_terms = None
             with pytest.raises(Exception) as message:
-                write_file(search_terms)
+                write_file_to_s3(search_terms)
 
             assert "No search terms provided." in str(message.value)
             assert "No search terms provided." in caplog.text
