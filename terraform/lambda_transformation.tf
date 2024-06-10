@@ -2,6 +2,7 @@ resource "aws_lambda_function" "transformation_lambda" {
   function_name    = var.transformation_lambda
   handler          = "transformation_handler.transformation_handler"
   runtime          = "python3.11"
+  timeout          = 900
   role             = aws_iam_role.role_for_transformation_lambda.arn
   s3_bucket        = aws_s3_bucket.lambda_code_bucket.id
   s3_key           = "transformation_lambda/transformation_handler.zip"
@@ -10,7 +11,7 @@ resource "aws_lambda_function" "transformation_lambda" {
 }
 
 
-
+# Trigger the lambda function with the S3 bucket
 resource "aws_lambda_permission" "allow_put_object_event" {
   action         = "lambda:InvokeFunction"
   function_name  = aws_lambda_function.transformation_lambda.function_name
