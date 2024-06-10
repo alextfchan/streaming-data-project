@@ -34,7 +34,6 @@ def get_api_key(secret_name) -> str:
         api_key = {"api_key": secret["api_key"]}
 
         logger.info("API Key successfully returned.")
-        # print("API Key successfully returned.")
         return api_key["api_key"]
 
     except ClientError as e:
@@ -48,8 +47,8 @@ def get_api_key(secret_name) -> str:
                 secret_name, e)
     except KeyError as e:
         logger.error(
-            "Incorrect key stored in secrets manager. Secret: %s, should have key: %s.",
-            secret_name, e)
+            "Incorrect key stored in secrets manager. Secret: %s, should have key: %s.", # noqa E501
+            secret_name, e) 
 
 
 def get_api_link(api_key: str, search_terms: dict) -> str:
@@ -75,4 +74,4 @@ def get_api_link(api_key: str, search_terms: dict) -> str:
         The API link for the Guardian API.
     """
 
-    return f"https://content.guardianapis.com/search?q={search_terms['search_term']}&{search_terms['date_from']}&api-key={api_key}"
+    return f"https://content.guardianapis.com/search?q={search_terms['search_term']}&{search_terms['date_from']}&api-key={api_key}" # noqa E501
