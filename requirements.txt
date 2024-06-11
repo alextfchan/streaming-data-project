@@ -20,6 +20,7 @@ MarkupSafe==2.1.5
 marshmallow==3.21.2
 mccabe==0.7.0
 mdurl==0.1.2
+mock==5.1.0
 moto==5.0.7
 packaging==24.0
 pbr==6.0.0
