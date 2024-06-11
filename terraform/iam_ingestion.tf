@@ -1,6 +1,6 @@
 # Create IAM role for Ingestion lambda
 resource "aws_iam_role" "role_for_ingestion_lambda" {
-  name = "role_for_ingestion_lambda"
+  name               = "role_for_ingestion_lambda"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -23,8 +23,8 @@ resource "aws_iam_role" "role_for_ingestion_lambda" {
 resource "aws_iam_policy" "cloudwatch_logs_policy_for_ingestion_lambda" {
   name        = "ingestion_lambda_cloudwatch_logs_policy"
   description = "Allows ingestion lambda to write logs to cloudwatch"
-  policy = jsonencode({
-    Version = "2012-10-17",
+  policy      = jsonencode({
+    Version   = "2012-10-17",
     Statement = [
       {
         Action   = "logs:CreateLogGroup",
@@ -49,9 +49,9 @@ resource "aws_iam_role_policy_attachment" "ingestion_lambda_cw_policy_attachment
 
 # Create IAM policy for Kinesis
 resource "aws_iam_policy" "kinesis_input_policy_for_ingestion_lambda" {
-    name = "ingestion_lambda_kinesis_input_policy"
+    name        = "ingestion_lambda_kinesis_input_policy"
     description = "Allows the ingestion lambda to interact with AWS Kinesis stream"
-    policy = jsonencode({
+    policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -76,16 +76,16 @@ resource "aws_iam_policy" "kinesis_input_policy_for_ingestion_lambda" {
 
 # Attach the Kinesis policy to the role
 resource "aws_iam_role_policy_attachment" "ingestion_lambda_kinesis_policy_attachment" {
-    role = aws_iam_role.role_for_ingestion_lambda.name
-    policy_arn = aws_iam_policy.kinesis_input_policy_for_ingestion_lambda.arn
+    role        = aws_iam_role.role_for_ingestion_lambda.name
+    policy_arn  = aws_iam_policy.kinesis_input_policy_for_ingestion_lambda.arn
 }
 
 
 # Create IAM policy for S3 Bucket
 resource "aws_iam_policy" "ingestion_lambda_input_to_bucket" {
-  name = "ingestion_lambda_input_to_bucket"
+  name        = "ingestion_lambda_input_to_bucket"
   description = "Allows the ingestion lambda to put objects into an s3 bucket"
-  policy = jsonencode({
+  policy      = jsonencode({
     "Version": "2012-10-17",
     Statement = [
       {
@@ -108,6 +108,6 @@ resource "aws_iam_policy" "ingestion_lambda_input_to_bucket" {
 
 # Attach the S3 policy to the role
 resource "aws_iam_role_policy_attachment" "ingestion_lambda_s3_bucket_policy_attachment" {
-    role = aws_iam_role.role_for_ingestion_lambda.name
-    policy_arn = aws_iam_policy.ingestion_lambda_input_to_bucket.arn
+    role        = aws_iam_role.role_for_ingestion_lambda.name
+    policy_arn  = aws_iam_policy.ingestion_lambda_input_to_bucket.arn
 }

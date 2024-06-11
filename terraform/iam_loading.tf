@@ -1,6 +1,6 @@
 # Create IAM role for Loading lambda
 resource "aws_iam_role" "role_for_loading_lambda" {
-  name = "role_for_loading_lambda"
+  name               = "role_for_loading_lambda"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -21,7 +21,7 @@ resource "aws_iam_role" "role_for_loading_lambda" {
 
 # Create IAM policy for Kinesis
 resource "aws_iam_policy" "kinesis_output_policy_for_loading_lambda" {
-    name = "loading_lambda_kinesis_output_policy"
+    name        = "loading_lambda_kinesis_output_policy"
     description = "Allows the loading lambda to interact with AWS Kinesis stream"
     policy = jsonencode({
     "Version": "2012-10-17",
@@ -50,8 +50,8 @@ resource "aws_iam_policy" "kinesis_output_policy_for_loading_lambda" {
 
 # Attach the Kinesis policy to the role
 resource "aws_iam_role_policy_attachment" "loading_lambda_kinesis_policy_attachment" {
-    role = aws_iam_role.role_for_loading_lambda.name
-    policy_arn = aws_iam_policy.kinesis_output_policy_for_loading_lambda.arn
+    role        = aws_iam_role.role_for_loading_lambda.name
+    policy_arn  = aws_iam_policy.kinesis_output_policy_for_loading_lambda.arn
 }
 
 # Create IAM policy for Cloudwatch logs
@@ -86,8 +86,8 @@ resource "aws_iam_role_policy_attachment" "loading_lambda_cw_policy_attachment" 
 resource "aws_iam_policy" "loading_lambda_s3_policy" {
   name        = "loading_lambda_s3_policy"
   description = "Allows reading from  transformed data bucket"
-  policy = jsonencode({
-    Version = "2012-10-17",
+  policy      = jsonencode({
+    Version   = "2012-10-17",
     Statement = [
       {
         Action = [
@@ -109,6 +109,6 @@ resource "aws_iam_policy" "loading_lambda_s3_policy" {
 
 # Attach the S3 policy to the role
 resource "aws_iam_role_policy_attachment" "loading_lambda_s3_bucket_policy_attachment" {
-  role = aws_iam_role.role_for_loading_lambda.name
-  policy_arn = aws_iam_policy.loading_lambda_s3_policy.arn
+  role        = aws_iam_role.role_for_loading_lambda.name
+  policy_arn  = aws_iam_policy.loading_lambda_s3_policy.arn
 }

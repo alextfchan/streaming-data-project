@@ -1,7 +1,7 @@
 # Create IAM role for Transformation lambda
 resource "aws_iam_role" "role_for_transformation_lambda" {
-  name = "role_for_transformation_lambda"
-  assume_role_policy = jsonencode({
+  name                = "role_for_transformation_lambda"
+  assume_role_policy  = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
@@ -50,7 +50,7 @@ resource "aws_iam_role_policy_attachment" "transformation_lambda_cw_policy_attac
 resource "aws_iam_policy" "transformation_lambda_s3_policy" {
   name        = "transformation_lambda_s3_policy"
   description = "Allows reading from  ingested data bucket and writing to transformed data bucket"
-  policy = jsonencode({
+  policy      = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
@@ -96,8 +96,8 @@ resource "aws_iam_policy" "transformation_lambda_access_secrets_manager_policy" 
   name        = "transformation_lambda_secrets_manager_policy"
   description = "Policy that grants access to Secrets Manager for the transformation lambda"
 
-  policy = jsonencode({
-    Version = "2012-10-17",
+  policy      = jsonencode({
+    Version   = "2012-10-17",
     Statement = [
       {
         Action   = "secretsmanager:GetSecretValue",

@@ -46,7 +46,7 @@ resource "aws_s3_object" "loading_lambda_code_upload" {
 
 
 data "archive_file" "layer_zip" {
-    type = "zip"
-    source_dir = "${path.module}/../python"
-    output_path = "${path.module}/../custom_layer.zip"
+    type        = "zip"
+    source_dir  = "${path.module}/../python"
+    output_path = "${path.module}/../python/custom_layer.zip"
 }

@@ -6,7 +6,7 @@ resource "aws_lambda_function" "transformation_lambda" {
   role             = aws_iam_role.role_for_transformation_lambda.arn
   s3_bucket        = aws_s3_bucket.lambda_code_bucket.id
   s3_key           = "transformation_lambda/transformation_handler.zip"
-  layers = ["arn:aws:lambda:eu-west-2:336392948345:layer:AWSSDKPandas-Python311:3", aws_lambda_layer_version.automated_layer.arn]
+  layers           = ["arn:aws:lambda:eu-west-2:336392948345:layer:AWSSDKPandas-Python311:3", aws_lambda_layer_version.automated_layer.arn]
   source_code_hash = resource.aws_s3_object.transformation_lambda_code_upload.source_hash
 }
 
@@ -26,5 +26,5 @@ resource "aws_s3_bucket_notification" "transformation_bucket_notification" {
     lambda_function_arn = aws_lambda_function.transformation_lambda.arn
     events              = ["s3:ObjectCreated:*"]
   }
-  depends_on = [aws_lambda_permission.allow_transformation_put_object_event]
+  depends_on     = [aws_lambda_permission.allow_transformation_put_object_event]
 }

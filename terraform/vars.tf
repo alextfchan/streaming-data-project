@@ -14,11 +14,11 @@ variable "loading_lambda" {
 }
 
 variable "kinesis_input" {
-  type = string
+  type    = string
   default = "streaming_data_project_input"
 }
 
 variable "kinesis_output" {
-  type = string
+  type    = string
   default = "streaming_data_project_output"
 }

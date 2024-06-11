@@ -6,7 +6,7 @@ resource "aws_lambda_function" "loading_lambda" {
     role                = aws_iam_role.role_for_loading_lambda.arn
     s3_bucket           = aws_s3_bucket.lambda_code_bucket.id
     s3_key              = "loading_lambda/loading_handler.zip"
-    layers = ["arn:aws:lambda:eu-west-2:336392948345:layer:AWSSDKPandas-Python311:3", aws_lambda_layer_version.automated_layer.arn]
+    layers              = ["arn:aws:lambda:eu-west-2:336392948345:layer:AWSSDKPandas-Python311:3", aws_lambda_layer_version.automated_layer.arn]
     source_code_hash    = resource.aws_s3_object.loading_lambda_code_upload.source_hash
 }
 
