@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "streaming-data-project-s3-bucket"
+    bucket = "streaming-data-project-backend-s3-bucket"
     key    = "production/terraform.tfstate"
     region = "eu-west-2"
   }
