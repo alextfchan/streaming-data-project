@@ -4,6 +4,8 @@ test_extract_input.py
 
 # Permanent Additional
 *.zip
+DELETE*
+test_terraform/
 
 # Terraform 
 .terraform*
@@ -25,14 +27,12 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.Python
 build/
 develop-eggs/
 dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
