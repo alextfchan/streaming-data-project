@@ -44,7 +44,6 @@ def write_file_to_s3(content):
 
         else:
             response = client.put_object(
-                # JSON content must be converted to bytes.
                 Body=json.dumps(content,
                                 indent=4,
                                 ensure_ascii=False
