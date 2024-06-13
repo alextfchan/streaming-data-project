@@ -21,8 +21,9 @@ class TestGetApiKey:
     def test_ClientError_secret_that_does_not_exist(self, caplog):
         secret_name = "fake_secret_name"
         client = boto3.client("secretsmanager", region_name="eu-west-2")
-        client.create_secret(Name=secret_name, SecretString=json.dumps({"incorrect_key": "test_value"}))
-
+        client.create_secret(
+            Name=secret_name,
+            SecretString=json.dumps({"incorrect_key": "test_value"}))
 
         with caplog.at_level(logging.ERROR):
             get_api_key("fake_secret")
@@ -31,12 +32,14 @@ class TestGetApiKey:
     def test_KeyError_incorrect_key_in_secret(self, caplog):
         secret_name = "fake_secret_name"
         client = boto3.client("secretsmanager", region_name="eu-west-2")
-        client.create_secret(Name=secret_name, SecretString=json.dumps({"incorrect_key": "test_value"}))
+        client.create_secret(
+            Name=secret_name,
+            SecretString=json.dumps({"incorrect_key": "test_value"}))
 
         with caplog.at_level(logging.ERROR):
             get_api_key("fake_secret_name")
 
-            assert "Incorrect key stored in secrets manager. Secret: fake_secret_name, should have key: 'api_key'." in caplog.text  #noqa: E501
+            assert "Incorrect key stored in secrets manager. Secret: fake_secret_name, should have key: 'api_key'." in caplog.text  # noqa: E501
 
     def test_connection_params_look_like_expected(self):
         secret_string = {"api_key": "mock real key"}
