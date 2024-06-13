@@ -1,7 +1,7 @@
 resource "aws_kinesis_stream" "input_stream" {
     name                = var.kinesis_input
     shard_count         = 1
-    retention_period    = 12
+    retention_period    = 24
 }
 
 resource "aws_kinesis_stream" "output_stream" {
