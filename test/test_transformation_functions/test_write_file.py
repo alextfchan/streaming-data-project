@@ -5,7 +5,7 @@ import pytest
 import time_machine
 import boto3
 from moto import mock_aws
-from transformation_lambda.write_file import write_file_to_s3
+from write_file import write_file_to_s3
 
 logger = logging.getLogger("MyLogger")
 logger.setLevel(logging.INFO)

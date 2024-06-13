@@ -3,7 +3,7 @@ import logging
 from moto import mock_aws
 import boto3
 import pytest
-from transformation_lambda.read_s3_json import read_s3_json
+from read_transformed_s3_json import read_transformed_s3_json
 
 logger = logging.getLogger("MyLogger")
 logger.setLevel(logging.INFO)
@@ -41,8 +41,8 @@ class TestReadTransformedS3Json:
             ]
         }
 
-        result = read_s3_json(event)
-        assert result == {"key": "value"}
+        result = read_transformed_s3_json(event)
+        assert result == b'{"key": "value"}'
 
     @mock_aws
     def test_read_s3_json_wrong_file_type(self, caplog):
@@ -69,7 +69,7 @@ class TestReadTransformedS3Json:
                 ]
             }
 
-            read_s3_json(event)
+            read_transformed_s3_json(event)
             assert "File test.txt is not a valid text file" in caplog.text
 
     @mock_aws
@@ -86,5 +86,5 @@ class TestReadTransformedS3Json:
                 ]
             }
 
-            read_s3_json(event)
+            read_transformed_s3_json(event)
             assert "No such bucket - test_bucket" in caplog.text

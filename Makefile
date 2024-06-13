@@ -57,11 +57,17 @@ run-flake:
 
 ## Run the unit tests
 unit-test:
-	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} pytest -rP)
+	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} pytest -rP ./test/test_input_tool)
+	$(call execute_in_env, PYTHONPATH=${WD}/src/ingestion_lambda pytest -rP ./test/test_ingestion_functions/)
+	$(call execute_in_env, PYTHONPATH=${WD}/src/transformation_lambda pytest -rP ./test/test_transformation_functions/)
+	$(call execute_in_env, PYTHONPATH=${WD}/src/loading_lambda pytest -rP ./test/test_loading_functions/)
 
 ## Run the coverage check
 check-coverage:
-	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} coverage run --omit 'venv/*' -m pytest && coverage report -m)
+	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} coverage run --omit 'venv/*' -m pytest ./test/test_input_tool && coverage report -m)
+	$(call execute_in_env, PYTHONPATH=${WD}/src/ingestion_lambda coverage run --omit 'venv/*' -m pytest ./test/test_ingestion_functions/ && coverage report -m)
+	$(call execute_in_env, PYTHONPATH=${WD}/src/transformation_lambda coverage run --omit 'venv/*' -m pytest ./test/test_transformation_functions/ && coverage report -m)
+	$(call execute_in_env, PYTHONPATH=${WD}/src/loading_lambda coverage run --omit 'venv/*' -m pytest ./test/test_loading_functions/ && coverage report -m)
 
 ## Run all checks
 run-checks: security-test run-flake unit-test check-coverage

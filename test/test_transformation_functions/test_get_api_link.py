@@ -1,4 +1,4 @@
-from transformation_lambda.get_api_utils import get_api_link
+from get_api_utils import get_api_link
 
 api_key = "test"
 

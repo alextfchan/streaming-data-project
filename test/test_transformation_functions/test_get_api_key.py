@@ -4,7 +4,7 @@ import json
 import pytest
 import boto3
 from moto import mock_aws
-from transformation_lambda.get_api_utils import get_api_key
+from get_api_utils import get_api_key
 
 logger = logging.getLogger()
 

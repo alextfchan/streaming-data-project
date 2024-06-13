@@ -4,7 +4,7 @@ import pytest
 from moto import mock_aws
 from botocore.exceptions import ClientError
 import boto3
-from loading_lambda.loading_handler import loading_handler
+from loading_handler import loading_handler
 
 
 logger = logging.getLogger("TestLoadingLogger")

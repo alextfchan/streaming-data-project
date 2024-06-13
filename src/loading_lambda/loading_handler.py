@@ -1,7 +1,7 @@
 import logging
 import boto3
 from botocore.exceptions import ClientError
-from loading_lambda.read_transformed_s3_json import read_transformed_s3_json
+from read_transformed_s3_json import read_transformed_s3_json
 
 logger = logging.getLogger("loading_lambda")
 logger.setLevel(logging.INFO)

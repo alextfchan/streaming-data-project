@@ -5,7 +5,7 @@ import pytest
 import time_machine
 import boto3
 from moto import mock_aws
-from ingestion_lambda.ingestion_handler import ingestion_handler
+from ingestion_handler import ingestion_handler
 
 
 logger = logging.getLogger("TestIngestionLogger")

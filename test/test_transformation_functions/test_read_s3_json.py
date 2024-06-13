@@ -2,10 +2,7 @@ import logging
 import pytest
 import boto3
 from moto import mock_aws
-from transformation_lambda.read_s3_json import (
-    read_s3_json,
-    get_object_path,
-)
+from read_s3_json import read_s3_json, get_object_path
 
 logger = logging.getLogger("TestTransformationLogger")
 logger.setLevel(logging.INFO)

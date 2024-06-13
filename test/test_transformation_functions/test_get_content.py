@@ -1,4 +1,4 @@
-from transformation_lambda.get_content import get_content, get_content_preview
+from get_content import get_content, get_content_preview
 
 
 class TestGetContent:

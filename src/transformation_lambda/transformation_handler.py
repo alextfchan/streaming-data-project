@@ -1,9 +1,9 @@
 import logging
 from botocore.exceptions import ClientError
-from transformation_lambda.get_api_utils import get_api_key, get_api_link
-from transformation_lambda.get_content import get_content
-from transformation_lambda.read_s3_json import read_s3_json
-from transformation_lambda.write_file import write_file_to_s3
+from get_api_utils import get_api_key, get_api_link
+from get_content import get_content
+from read_s3_json import read_s3_json
+from write_file import write_file_to_s3
 
 
 logging.basicConfig()
