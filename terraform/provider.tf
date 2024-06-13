@@ -7,12 +7,12 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "streaming-data-project-backend-s3-bucket"
-    key    = "production/terraform.tfstate"
-    region = "eu-west-2"
+    bucket    = "streaming-data-project-backend-s3-bucket"
+    key       = "production/terraform.tfstate"
+    region    = "eu-west-2"
   }
 }
 
 provider "aws" {
-  region = "eu-west-2"
+  region  = "eu-west-2"
 }
