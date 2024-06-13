@@ -2,6 +2,7 @@
 extract_input.py
 test_extract_input.py
 test_test/
+READMENOTES.md
 
 # Permanent Additional
 *.zip
