@@ -70,12 +70,12 @@ class TestTransformationHandler:
                                           caplog):
 
         s3, s3_ingested, s3_transformed = s3_fixture
-        search_terms = '{"search_term": "machine learning", "date_from": "date_from=2023-01-01", "reference": "guardian_content"}' # noqa E501
+        search_terms = '{"search_term": "machine learning", "date_from": "2023-01-01", "reference": "guardian_content"}' # noqa E501
 
         s3.put_object(
             Bucket=s3_ingested,
             Key="test_file.json",
-            Body=search_terms.encode("utf-8"))#json.dumps(search_terms).encode("utf-8")) # noqa E501
+            Body=search_terms.encode("utf-8")) # noqa E501
 
         transformation_handler(test_event, "content")
 
