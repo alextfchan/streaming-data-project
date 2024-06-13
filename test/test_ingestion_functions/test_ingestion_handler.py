@@ -40,7 +40,11 @@ class TestIngestionHandler:
             )
             yield s3_client, bucket_name
 
-    def test_lambda_returns_correct_number_of_records(self, kinesis_fixture, s3_fixture, caplog):
+    def test_lambda_returns_correct_number_of_records(
+            self,
+            kinesis_fixture,
+            s3_fixture,
+            caplog):
 
         mock_event = {
             'Records': [
@@ -96,7 +100,11 @@ class TestIngestionHandler:
             ingestion_handler(event=mock_event, context=None)
             assert "Success. File 2023-1-1-173019-search-terms.json saved, in bucket: streaming-data-ingested-data-bucket." in caplog.text  # noqa E501
 
-    def test_lambda_returns_correct_test_data(self, kinesis_fixture, s3_fixture, caplog):
+    def test_lambda_returns_correct_test_data(
+            self,
+            kinesis_fixture,
+            s3_fixture,
+            caplog):
 
         mock_event = {
             'Records': [

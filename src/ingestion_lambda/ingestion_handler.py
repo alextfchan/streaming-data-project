@@ -1,8 +1,8 @@
 import base64
 import logging
-import json
 from datetime import datetime as dt
 import boto3
+from botocore.exceptions import ClientError
 
 logging.basicConfig()
 logger = logging.getLogger("ingestion_lambda")
@@ -28,18 +28,21 @@ def ingestion_handler(event, context):
 
     Raises
     ------
+    ClientError
+        If there is an error with the boto3 client connection.
     Exception
         If there is an error during the processing of the event.
     """
+
     client = boto3.client("s3")
+    bucket_name = "streaming-data-ingested-data-bucket"
+
     date = dt.now()
     year = date.year
     month = date.month
     day = date.day
     time = date.strftime("%H%M%S")
     file_name = f"{year}-{month}-{day}-{time}-search-terms.json"
-
-    bucket_name = "streaming-data-ingested-data-bucket"
 
     for record in event['Records']:
         try:
@@ -56,7 +59,11 @@ def ingestion_handler(event, context):
                 logger.info("Success. File %s saved, in bucket: %s.",
                             file_name, bucket_name)
 
+        except ClientError as ce:
+            logger.error("Error: %s", ce.response["Error"]["Message"])
+            raise ce
         except Exception as e:
-            logger.info("An error occurred %s", e)
+            logger.error("An error occurred %s", e)
             raise e
+
     logger.info("Successfully processed %s records.", len(event['Records']))
