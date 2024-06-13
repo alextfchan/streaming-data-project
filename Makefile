@@ -53,11 +53,11 @@ security-test:
 
 ## Run the flake8 code check
 run-flake:
-	$(call execute_in_env, flake8  ./src/*/*.py ./test/*.py)
+	$(call execute_in_env, flake8  ./src/*/*.py ./test/*/*.py)
 
 ## Run the unit tests
 unit-test:
-	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} pytest -v)
+	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} pytest -rP)
 
 ## Run the coverage check
 check-coverage:
@@ -65,3 +65,7 @@ check-coverage:
 
 ## Run all checks
 run-checks: security-test run-flake unit-test check-coverage
+
+## Run the application (CLI)
+create-new-search:
+	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} python src/input_tool/create_new_search.py)
