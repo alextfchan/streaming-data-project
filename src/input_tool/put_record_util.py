@@ -26,7 +26,7 @@ def put_record(data):
     if not isinstance(data, bytes):
         raise TypeError("Data must be the correct type: bytes.")
 
-    kinesis_client = boto3.client("kinesis")
+    kinesis_client = boto3.client("kinesis", region_name="eu-west-2")
 
     try:
         kinesis_client.put_record(

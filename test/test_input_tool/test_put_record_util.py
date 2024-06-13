@@ -18,7 +18,7 @@ def aws_credentials():
     os.environ["AWS_DEFAULT_REGION"] = "eu-west-2"
 
 
-class TestUserInputTool:
+class TestPutRecordUtil:
     @pytest.fixture
     def kinesis_fixture(self):
         with mock_aws():
