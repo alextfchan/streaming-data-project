@@ -44,10 +44,9 @@ def transformation_handler(event, context):
 
         api_link = get_api_link(api_key, search_terms)
         logger.info("Getting API link: %s", api_link)
-        logger.info("Before get_content")
+
         content = get_content(api_link, api_key)
         logger.info("Getting content: %s", content)
-        logger.info("Content type: %s", type(content))
 
         write_file_to_s3(content)
         logger.info("Content written to S3 bucket.")
