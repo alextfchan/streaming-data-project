@@ -71,4 +71,4 @@ class TestUserInputTool:
 
         except ClientError as ce:
             assert ce.response["Error"]["Code"] == "ResourceNotFoundException"
-            assert ce.response["Error"]["Message"] == "Stream streaming_data_project_input under account 123456789012 not found." # noqa E501
+            assert (ce.response["Error"]["Message"] == "Stream streaming_data_project_input under account 123456789012 not found.") # noqa E501
