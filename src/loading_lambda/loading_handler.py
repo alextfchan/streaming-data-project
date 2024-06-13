@@ -33,7 +33,7 @@ def loading_handler(event, context):
     """
 
     try:
-        kinesis_client = boto3.client('kinesis')
+        kinesis_client = boto3.client("kinesis", region_name="eu-west-2")
 
         content = read_transformed_s3_json(event)
 
