@@ -43,9 +43,10 @@ test_event = {
     ]
 }
 
+
 class TestReadS3Json:
     @pytest.fixture
-    def test_get_object_path_function_output_correct_bucket_and_file_name(self):
+    def test_get_object_path_function_output_correctly(self):
         bucket_name, file_name = get_object_path(test_event["Records"])
         assert bucket_name == "test_bucket_name"
         assert file_name == "test_file.json"
@@ -55,11 +56,10 @@ class TestReadS3Json:
         client = boto3.client("s3", region_name="eu-west-2")
         example_dict = '{"c1": 1, "c2": 2}'
         coded_dict = example_dict.encode("utf-8")
-        # json_data = json.dumps(example_dict)
         client.create_bucket(
             Bucket="test_bucket_name",
             CreateBucketConfiguration={"LocationConstraint": "eu-west-2"},
-    )
+        )
 
         client.put_object(
             Body=coded_dict, Bucket="test_bucket_name", Key="test_file.json"
@@ -67,15 +67,13 @@ class TestReadS3Json:
         read_s3_json(test_event)
 
         with caplog.at_level(logging.INFO):
-            assert "Data has been successfully read from S3 bucket." in caplog.text
-        # assert result_content == {"c1": 1, "c2": 2}
+            assert "Data has been successfully read from S3 bucket." in caplog.text # noqa 501
 
     @mock_aws
     def test_read_s3_json_get_correct_content(self):
         client = boto3.client("s3", region_name="eu-west-2")
         example_dict = '{"c1": 1, "c2": 2}'
         coded_dict = example_dict.encode("utf-8")
-        # json_data = json.dumps(example_dict)
         client.create_bucket(
             Bucket="test_bucket_name",
             CreateBucketConfiguration={"LocationConstraint": "eu-west-2"},
@@ -87,3 +85,9 @@ class TestReadS3Json:
         result_content = read_s3_json(test_event)
 
         assert result_content == {"c1": 1, "c2": 2}
+
+    @mock_aws
+    def test_read_s3_json_no_bucket(self, caplog):
+        with caplog.at_level(logging.ERROR):
+            read_s3_json(test_event)
+            assert "No such bucket - test_bucket_name" in caplog.text
