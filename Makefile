@@ -66,6 +66,7 @@ check-coverage:
 ## Run all checks
 run-checks: security-test run-flake unit-test check-coverage
 
+################################################################################################################
 ## Run the application (CLI)
 create-new-search:
 	$(call execute_in_env, PYTHONPATH=${PYTHONPATH} python src/input_tool/create_new_search.py)
