@@ -1,12 +1,9 @@
-import os
 import logging
-import json
-import boto3
 from botocore.exceptions import ClientError
-from get_api_utils import get_api_key, get_api_link
-from get_content import get_content, get_content_preview
-from read_s3_json import read_s3_json, get_object_path
-from write_file import write_file_to_s3
+from transformation_lambda.get_api_utils import get_api_key, get_api_link
+from transformation_lambda.get_content import get_content
+from transformation_lambda.read_s3_json import read_s3_json
+from transformation_lambda.write_file import write_file_to_s3
 
 
 logging.basicConfig()
@@ -32,6 +29,8 @@ def transformation_handler(event, context):
 
     Raises
     ------
+    ClientError
+        If there is an error with the boto3 client connection.
     Exception
         If there is an error during the processing of the event.
     """
@@ -45,11 +44,16 @@ def transformation_handler(event, context):
 
         api_link = get_api_link(api_key, search_terms)
         logger.info("Getting API link: %s", api_link)
-
+        logger.info("Before get_content")
         content = get_content(api_link, api_key)
         logger.info("Getting content: %s", content)
+        logger.info("Content type: %s", type(content))
 
         write_file_to_s3(content)
+        logger.info("Content written to S3 bucket.")
 
+    except ClientError as ce:
+        logger.error("Error: %s", ce.response["Error"]["Message"])
+        raise ce
     except Exception as e:
         logger.error("Error whilst processing JSON file: %s", e)
