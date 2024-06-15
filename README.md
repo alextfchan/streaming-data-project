@@ -43,6 +43,7 @@ AWS_SECRET_ACCESS_KEY
 <br/>
 #### AWS Secrets
 Secret name: guardian_api_key
+Secret: {"api_key":"<insert guardian api key here>"
 
 You are now set up and ready to use this pipeline.
 
